@@ -61,6 +61,22 @@ $.getJSON("https://caro-01.github.io/tarea_2/capas/localidades/localidades.geojs
   control_capas.addOverlay(capa_loc, 'Localidades');
 });	
 
+// Capa vectorial de rotulos de Santa Ana en formato GeoJSON
+$.getJSON("https://caro-01.github.io/tarea_2/capas/rotulos/rotulos.geojson", function(geodata) {
+  var capa_rotulos = L.geoJson(geodata, {
+    style: function(feature) {
+	  return {'color': "green", 'weight': 8, 'fillOpacity': 0.0}
+    },
+    onEachFeature: function(feature, layer) {
+      var popupText = "<strong>Código</strong>: " + feature.properties.ide_rotulo + "<br>" + "<strong>Descripción</strong>: " + feature.properties.descrip;
+      layer.bindPopup(popupText);
+    }			
+  }).addTo(mapa);
+
+  control_capas.addOverlay(capa_rotulos, 'Rótulos');
+});	
+
+
 // Capa vectorial de la red vial de Santa Ana en formato GeoJSON
 $.getJSON("https://caro-01.github.io/tarea_2/capas/red_vial/red_vial.geojson", function(geodata) {
   var capa_vias = L.geoJson(geodata, {
